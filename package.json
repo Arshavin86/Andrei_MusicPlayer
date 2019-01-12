@@ -7,7 +7,7 @@
     "react": "webpack -d --watch",
     "server": "nodemon server/index.js",
     "db_schemaPost": "psql soundcloud < schema.sql",
-    "db_schemaCass": "cqlshjs -e DESCRIBE KEYSPACE KeySpace2 > schema.cql",
+    "db_schemaCass": "cqlshjs -e 'SOURCE /home/andrei/HRR35/SDC/Andrei_MusicPlayer/schema.cql'",
     "faker": "node database/faker.js",
     "db-post": "node database/seedPostgres.js"
   },
