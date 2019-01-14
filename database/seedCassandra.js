@@ -1,44 +1,51 @@
 const playlist = require('./faker');
 const client = require('./cassandra');
+const cassandra = require('cassandra-driver');
 
 const queryTemp = 'INSERT INTO songs (id, album, artist, duration, released, title, image, song_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 const song = playlist.songArray;
 console.log(song.length)
+ 
 
-const queries = [
- ]; 
+function getNextData(queries, chunk) {
+  console.log(chunk);
+  for (let i = 0; i < 10; i++) {
+      const idx = chunk * 10 + i;
+      let query = {};
+      let params = [
+          song[idx].id,
+          song[idx].album,
+          song[idx].artist,
+          song[idx].duration,
+          song[idx].released,
+          song[idx].title,
+          song[idx].image,
+          song[idx].song_url,
+      ];
+      query.query = queryTemp;
+      query.params = params;
+      queries.push(query);
+  }
+  return queries;
+}
+const queryOptions = { prepare: true };
 
-for (var i = 0; i < song.length; i++) {
-    let query = {};
-    let params = [
-        i + 1,
-        song[i].album,
-        song[i].artist,
-        song[i].duration,
-        song[i].released,
-        song[i].title,
-        song[i].image,
-        song[i].song_url,
-    ];
-    query.query = queryTemp;
-    query.params = params;
-    queries.push(query);
-    console.log(i);
+async function insertBatch() {
+  let chunk = 0;
+  let queries = [];
+  try { 
+    while (chunk < 1000000) {
+      let data = await getNextData(queries, chunk);
+      let response = await client.batch(data, queryOptions);
+      // console.log(response);
+      queries = [];
+      chunk ++;
+    }
+  }
+  catch(err) {
+    console.log(err)
+  }
 }
 
-// Promise-based call
-const queryOptions = { prepare: true, consistency: cassandra.types.consistencies.quorum };
+insertBatch();
 
-client.batch(queries, queryOptions)
-.then((result) => {
-    console.log(result)
-})
-.catch((err) => {
-    console.log(err)
-});
-
-
-      //use prepared statements or hints for the driver to encode the data accordingly:
-//     client.execute(query, params, {prepare: true})
-//   .then(result => console.log(i))
-//   .catch(err => console.log(err));
