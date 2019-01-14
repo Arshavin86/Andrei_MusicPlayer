@@ -16,7 +16,7 @@ function millisToMinutesAndSeconds(millis) {
         const idx = pageIndex * 10000 + i;
         console.log(idx);
         data.push({
-          id: idx,
+          id: playlist.songArray[idx-1].id,
           album: playlist.songArray[idx-1].album,
           artist: playlist.songArray[idx-1].artist,
           duration: playlist.songArray[idx-1].duration,
