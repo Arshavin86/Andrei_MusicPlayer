@@ -8,7 +8,8 @@ const clientOptions = {
 }; 
 //Connect to the cluster
 const client = new cassandra.Client(clientOptions);
-
+const query = 'SELECT * FROM songs WHERE id = ?';
+const queryOptions = { prepare: true };
 
 client.connect((err) => {
     if(err) {
@@ -18,4 +19,8 @@ client.connect((err) => {
     }
 }); 
 
-module.exports = client;
+module.exports = { 
+    client,
+    query,
+    queryOptions,
+}
