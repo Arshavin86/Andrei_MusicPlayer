@@ -9,8 +9,8 @@ console.log(song.length)
 
 function getNextData(queries, chunk) {
   console.log(chunk);
-  for (let i = 0; i < 10; i++) {
-      const idx = chunk * 10 + i;
+  for (let i = 0; i < 100; i++) {
+      const idx = chunk * 100 + i;
       let query = {};
       let params = [
           song[idx].id,
@@ -34,7 +34,7 @@ async function insertBatch() {
   let chunk = 0;
   let queries = [];
   try { 
-    while (chunk < 1000000) {
+    while (chunk < 100000) {
       let data = await getNextData(queries, chunk);
       let response = await client.batch(data, queryOptions);
       // console.log(response);
