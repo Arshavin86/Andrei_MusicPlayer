@@ -10,7 +10,8 @@
     "db_schemaCass": "cqlshjs -e 'SOURCE /home/andrei/HRR35/SDC/Andrei_MusicPlayer/schema.cql'",
     "faker": "node database/faker.js",
     "db_post": "node database/seedPostgres.js",
-    "db_cass": "node database/seedCassandra.js"
+    "db_cass": "node database/seedCassandra.js",
+    "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -55,7 +56,9 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-react": "^7.11.1",
+    "frisby": "^2.1.1",
     "gulp": "^4.0.0",
+    "jest": "^23.6.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.0",
     "webpack-cli": "^3.1.2"

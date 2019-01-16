@@ -8,7 +8,8 @@ const clientOptions = {
 }; 
 //Connect to the cluster
 const client = new cassandra.Client(clientOptions);
-const query = 'SELECT * FROM songs WHERE id = ?';
+const selectQuery = 'SELECT * FROM songs WHERE id = ?';
+const insertQuery = 'INSERT INTO songs (id, album, artist, duration, released, title, image, song_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?) IF NOT EXISTS';
 const queryOptions = { prepare: true };
 
 client.connect((err) => {
@@ -21,6 +22,7 @@ client.connect((err) => {
 
 module.exports = { 
     client,
-    query,
+    selectQuery,
+    insertQuery,
     queryOptions,
 }
