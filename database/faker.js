@@ -13,6 +13,7 @@ const randomSongs = [
 
   for (let i = 1; i <= 10000000; i += 1) {
     let obj1 = {
+      id: i,
       title: faker.lorem.word(),
       artist: faker.name.findName(),
       album: faker.lorem.word(),
@@ -24,7 +25,7 @@ const randomSongs = [
     songArray.push(obj1);
   }
 console.log(songArray.length);
-
+// console.log(songArray);
 
 module.exports = { songArray };
 

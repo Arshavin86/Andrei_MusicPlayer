@@ -72,21 +72,22 @@ class MusicPlayer extends React.Component {
 
     axios.get(`/api/jane/player/${id}`)
     .then((response) => { 
-      audio = new Audio(response.data[0]['song_url']);
+      console.log(response);
+      audio = new Audio(response.data.rows[0]['song_url']);
       audio.addEventListener('loadedmetadata', () => {
         this.setState({
           duration: audio.duration + 1
         });
       });
-      console.log(response.data)
+      console.log('data from server:', response.data)
       this.setState({
-        album: response.data[0].album,
-        artist: response.data[0].artist,
-        id: response.data[0].id,
-        image: response.data[0].image,
-        released: response.data[0].released,
+        album: response.data.rows[0].album,
+        artist: response.data.rows[0].artist,
+        id: response.data.rows[0].id,
+        image: response.data.rows[0].image,
+        released: response.data.rows[0].released,
         song: audio,
-        title: response.data[0].title,
+        title: response.data.rows[0].title,
         wave: waveGenerator().split(',')
       });
     })
