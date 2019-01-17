@@ -1,6 +1,7 @@
-const db = require('./postgresql');
+const postgres = require('./postgresql');
 const playlist = require('./faker');
 const pgp = require('pg-promise')({});
+const { db } = postgres;
 
 function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
@@ -8,12 +9,12 @@ function millisToMinutesAndSeconds(millis) {
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
   
-  function getNextData(t, pageIndex) {
+  function getNextData(t, index) {
     let data = null;
-    if (pageIndex < 1000) {
+    if (index < 1000) {
       data = [];
       for (let i = 1; i < 10001; i++) {//5:21 with 1000 chunks, 5:25 with 100 chunks, 5:30 with 10 chunks
-        const idx = pageIndex * 10000 + i;
+        const idx = index * 10000 + i;
         console.log(idx);
         data.push({
           id: playlist.songArray[idx-1].id,
@@ -29,7 +30,8 @@ function millisToMinutesAndSeconds(millis) {
     }
     return Promise.resolve(data);
   }
-  
+
+  // Creating a reusable/static ColumnSet for generating INSERT queries:
   const cs = new pgp.helpers.ColumnSet([
     'id',
     'album',
@@ -60,3 +62,5 @@ function millisToMinutesAndSeconds(millis) {
     // ROLLBACK has been executed
     console.log(error);
   });
+
+  module.exports = { cs };

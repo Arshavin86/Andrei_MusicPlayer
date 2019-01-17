@@ -1,4 +1,7 @@
-const pgp = require('pg-promise')({});
+const promise = require('bluebird');
+const options = { promiseLib: promise };
+const pgp = require('pg-promise')(options);
+
 
 const databaseConfig = {
   "host": "localhost",
@@ -7,6 +10,18 @@ const databaseConfig = {
   "user": "andrei",
   "password": "privet",
 };
+
+// Creating a reusable/static ColumnSet for generating INSERT queries:
+const cs = new pgp.helpers.ColumnSet([
+  'id',
+  'album',
+  'artist', 
+  'duration',
+  'released',
+  'title',
+  'image',
+  'song_url',
+], {table: 'songs'});
 
 // console.log(playlist);
 
@@ -21,4 +36,5 @@ db.connect()
       console.log('ERROR:', error.message || error);
 });
 
-module.exports = db;
+module.exports = { db, cs };
+
