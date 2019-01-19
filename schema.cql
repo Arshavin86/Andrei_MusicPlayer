@@ -11,7 +11,6 @@ CREATE TABLE songs (
     duration int,
     released date,
     title text,
-    wave text,
     image text,
     song_url text
 );

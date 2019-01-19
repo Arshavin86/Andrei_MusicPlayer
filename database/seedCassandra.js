@@ -1,7 +1,6 @@
 const playlist = require('./faker');
-const client = require('./cassandra');
-const cassandra = require('cassandra-driver');
-
+const cassandra = require('./cassandra');
+const { client } = cassandra;
 const queryTemp = 'INSERT INTO songs (id, album, artist, duration, released, title, image, song_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 const song = playlist.songArray;
 console.log(song.length)

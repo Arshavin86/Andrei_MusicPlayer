@@ -1,9 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// const path = require('path');
-const dbPost = require('../database/postgresql');
+const postgres = require('./controllers');
 const dbCass = require('../database/cassandra');
-const { client, selectQuery, insertQuery, queryOptions } = dbCass;
+const { client, selectQuery, insertQuery, queryOptions, updateQuery } = dbCass;
 
 const server = express();
 server.use(bodyParser.json());
@@ -15,34 +14,43 @@ server.use(/\/\d+\//, express.static('./client/dist/'));
 
 //GET request to fetch a new song data from db
 server.get('/api/jane/player/:id', (req, res) => {
-  const { id } = req.params;
-
+  // const { id } = req.params;
   //make query in PostgreSQL:
-  // dbPost.query('SELECT * FROM songs WHERE id = $1', id)
+  postgres.getAll(req, res);
 
   //make query in Cassandra:
-  client.execute(selectQuery, [ id ], queryOptions)
-
-    .then((data) => { 
-      console.log('I got data from Cassandra:', data)
-      res.send(data).status(200); 
-    })
-    .catch((error) => { res.send(error).status(500); });
+  // client.execute(selectQuery, [ id ], queryOptions)
+    // .then((data) => { 
+    //   console.log('I got data from database: ', data.rows)
+    //   res.send(data).status(200); 
+    // })
+    // .catch((error) => { 
+    //   console.log('Selecting from db is failed: ',err);
+    //   res.send(error).status(500); 
+    // });
 });
 
 //POST request to insert a new song data into db
 server.post('/api/jane/player/', (req, res) => {
-  console.log(req.body);
-  const { id, album, artist, duration, released, title, image, song_url} = req.body;
 
-  //make query in Cassandra:
-  client.execute(insertQuery, [ id, album, artist, duration, released, title, image, song_url ], queryOptions)
+  postgres.add(req, res)
 
-    .then((data) => { 
-      console.log('I got response from Cassandra:', data)
-      res.send(data).status(201); 
-    })
-    .catch((error) => { res.send(error).status(500) });
+});
+
+//PUT request to update a song on the db
+server.put('/api/jane/player/:id', (req, res) => {
+  // const { id } = req.params;
+  // console.log(typeof Number(id));
+
+  postgres.update(req, res);
+
+});
+
+//PUT request to update a song on the db
+server.put('/api/jane/player/:id', (req, res) => {
+  
+  postgres.delete(req, res);
+
 });
 
 module.exports = server;
