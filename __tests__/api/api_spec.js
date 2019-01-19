@@ -4,13 +4,13 @@ const Joi = frisby.Joi; // Frisby exposes Joi for convenience
 
 
 // sample test:
-it('should be a teapot', function () {
-  return frisby.get('http://httpbin.org/status/418')
-    .expect('status', 418);
-});
+// it('should be a teapot', function () {
+//   return frisby.get('http://httpbin.org/status/418')
+//     .expect('status', 418);
+// });
 
 //GET an item from db:
-var itemID = 100001;
+var itemID = 100003;
 it('Should return item with given ID and a status of 200', () => {
     return frisby.get(`http://127.0.0.1:8000/api/jane/player/${itemID}`)
         .expect('status', 200)
@@ -35,13 +35,13 @@ it('POST should return a status of 201 created', () => {
         image: 'http://lorempixel.com/640/480/abstract',
         song_url: 'https://s3-us-west-1.amazonaws.com/democrituscloud/RASPUTIN_-_Funk_Overload.mp3'
     })
-    .expect('status', 200)
+    .expect('status', 201)
     .then((result) => {
         console.log('result of POST: ',result);
   });
 })
 
-// Update an item on Db:
+// // Update an item on Db:
 it ('Update should return a status of 200 OK', function () {
     return frisby
     .put(`http://127.0.0.1:8000/api/jane/player/${itemID}`, {

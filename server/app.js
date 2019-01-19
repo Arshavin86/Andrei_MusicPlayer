@@ -1,3 +1,4 @@
+const nr = require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const postgres = require('./controllers');
@@ -16,7 +17,7 @@ server.use(/\/\d+\//, express.static('./client/dist/'));
 server.get('/api/jane/player/:id', (req, res) => {
   // const { id } = req.params;
   //make query in PostgreSQL:
-  postgres.getAll(req, res);
+  postgres.get(req, res);
 
   //make query in Cassandra:
   // client.execute(selectQuery, [ id ], queryOptions)
@@ -46,8 +47,8 @@ server.put('/api/jane/player/:id', (req, res) => {
 
 });
 
-//PUT request to update a song on the db
-server.put('/api/jane/player/:id', (req, res) => {
+//DELETE request to delete a song from the db
+server.delete('/api/jane/player/:id',  (req, res) => {
   
   postgres.delete(req, res);
 
