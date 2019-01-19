@@ -1,5 +1,4 @@
-const cassandra = require('cassandra-driver');
-// const async = require('async');
+const cassandra = require('cassandra-driver')
 
 const clientOptions = {
     localDataCenter: 'datacenter1',

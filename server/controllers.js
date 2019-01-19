@@ -1,7 +1,7 @@
 const postgres = require('../database/postgresql');
 const { db } = postgres;
 
-exports.getAll = (req, res) => {
+exports.get = (req, res) => {
     const { id } = req.params;
     db.query('SELECT * FROM songs WHERE id = $1', id)
     .then((data) => { 
