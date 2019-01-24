@@ -1,9 +1,9 @@
-const nr = require('newrelic');
+// const nr = require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const postgres = require('./controllers');
-const dbCass = require('../database/cassandra');
-const { client, selectQuery, insertQuery, queryOptions, updateQuery } = dbCass;
+// const dbCass = require('../database/cassandra');
+// const { client, selectQuery, insertQuery, queryOptions, updateQuery } = dbCass;
 
 const server = express();
 server.use(bodyParser.json());

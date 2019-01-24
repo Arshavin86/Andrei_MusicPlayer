@@ -4,10 +4,10 @@ const pgp = require('pg-promise')(options);
 
 
 const databaseConfig = {
-  "host": "localhost",
+  "host": "ec2-18-225-6-201.us-east-2.compute.amazonaws.com",
   "port": 5432,
   "database": "soundcloud",
-  "user": "andrei",
+  "user": "postgres",
   "password": "privet",
 };
 
