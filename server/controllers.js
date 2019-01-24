@@ -9,7 +9,7 @@ exports.get = (req, res) => {
         res.send(data).status(200); 
       })
       .catch((error) => { 
-        console.log('Selecting from db is failed: ',err);
+        console.log('Selecting from db is failed: ', error);
         res.send(error).status(500); 
       });
 }
