@@ -9,6 +9,7 @@
     "db_schemaPost": "psql soundcloud < schema.sql",
     "db_schemaCass": "cqlshjs -e 'SOURCE /home/andrei/HRR35/SDC/Andrei_MusicPlayer/schema.cql'",
     "faker": "node database/faker.js",
+    "CSV": "node --max-old-space-size=8192 fakerCSV.js",
     "db_post": "node --max-old-space-size=8192 database/seedPostgres.js",
     "db_cass": "node --max-old-space-size=8192 database/seedCassandra.js",
     "test": "jest --watchAll"
