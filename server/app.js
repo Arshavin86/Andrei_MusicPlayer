@@ -10,8 +10,13 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 // server.use(express.static(path.join(__dirname, '/../client/dist')));
-server.use('/', express.static('./client/dist/'));
-server.use(/\/\d+\//, express.static('./client/dist/'));
+server.use('/', express.static('./script'));
+// server.use(/\/\d+\//, express.static('./client/dist/'));
+
+
+server.get('/script', function(req, res) {  
+  res.sendFile('script.js'); 
+});
 
 //GET request to fetch a new song data from db
 server.get('/api/jane/player/:id', (req, res) => {
@@ -51,6 +56,12 @@ server.put('/api/jane/player/:id', (req, res) => {
 server.delete('/api/jane/player/:id',  (req, res) => {
   
   postgres.delete(req, res);
+
+});
+
+server.post('/zenhub', (req, res) => {
+
+  console.log(req.body)
 
 });
 
